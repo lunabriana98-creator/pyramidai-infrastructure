@@ -53,7 +53,7 @@
             text-align: center;
         }
         .flow-arrow {
-            /* Unicode Down Arrow */
+            /* Unicode Down Arrow Fix */
             color: var(--color-primary); 
             font-size: 2.5rem;
             font-weight: 900;
@@ -135,8 +135,20 @@
             max-height: 1000px; /* Large value for smooth transition */
             padding-top: 1rem;
             padding-bottom: 1rem;
-            overflow-y: auto; /* CRITICAL FIX: Ensures scrollability */
+            overflow-y: auto; /* Ensures scrollability */
         }
+        /* Style for the department pitch boxes */
+        .dept-pitch {
+            background-color: #f3f4f6;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            border-left: 6px solid;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+        }
+        .dept-pitch.mech { border-color: #10b981; /* Green */ }
+        .dept-pitch.comp { border-color: #3b82f6; /* Blue */ }
+        .dept-pitch.phys { border-color: #ef4444; /* Red */ }
+
     </style>
 </head>
 <body class="antialiased">
@@ -174,7 +186,7 @@
                 <div class="flex flex-col md:flex-row justify-center gap-8">
                     <div class="flex-1 bg-gray-50 rounded-lg p-6 border-l-4" style="border-color: var(--color-accent);">
                         <h3 class="text-2xl font-bold mb-3" style="color: var(--color-primary-dark);">The &phi; (Phi) Ratio: 1.618</h3>
-                        <p class="text-base text-gray-700">Found throughout nature, the Golden Ratio (&phi;) and its corresponding Golden Angle (137.5&deg;) are optimal for packing and minimizing interference. We will use this to space servers, creating natural harmonic separation and reducing EM interference.</p>
+                        <p class="text-base text-gray-700">Found throughout nature, the **Golden Ratio (&phi;)** and its corresponding Golden Angle (137.5&deg;) are optimal for packing and minimizing interference. We will use this to space servers, creating natural harmonic separation and reducing EM interference.</p>
                     </div>
                     <div class="flex-1 bg-gray-50 rounded-lg p-6 border-l-4" style="border-color: var(--color-accent);">
                         <h3 class="text-2xl font-bold mb-3" style="color: var(--color-primary-dark);">The 26.5&deg; Angle</h3>
@@ -255,19 +267,19 @@
                         <h3 class="text-xl font-bold" style="color: var(--color-primary-dark);">King's Chamber</h3>
                         <p class="text-gray-700">GPU / High-Performance Compute (Max Heat)</p>
                     </div>
-                    <div class="flow-arrow">&#x2193;</div> <!-- Down Arrow Fix -->
+                    <div class="flow-arrow">&#x2193;</div> <!-- Down Arrow -->
                     <div class="flow-step">
                         <span class="text-sm font-bold text-gray-500">LEVEL 3: GALLERY</span>
                         <h3 class="text-xl font-bold" style="color: var(--color-primary-dark);">Grand Gallery (26.5&deg;)</h3>
                         <p class="text-gray-700">Main Computational Servers (High Heat)</p>
                     </div>
-                    <div class="flow-arrow">&#x2193;</div> <!-- Down Arrow Fix -->
+                    <div class="flow-arrow">&#x2193;</div> <!-- Down Arrow -->
                     <div class="flow-step">
                         <span class="text-sm font-bold text-gray-500">LEVEL 2: CHAMBER</span>
                         <h3 class="text-xl font-bold" style="color: var(--color-primary-dark);">Queen's Chamber</h3>
                         <p class="text-gray-700">Input/Output Servers (Low Heat)</p>
                     </div>
-                    <div class="flow-arrow">&#x2193;</div> <!-- Down Arrow Fix -->
+                    <div class="flow-arrow">&#x2193;</div> <!-- Down Arrow -->
                     <div class="flow-step">
                         <span class="text-sm font-bold text-gray-500">LEVEL 1: BASE</span>
                         <h3 class="text-xl font-bold" style="color: var(--color-primary-dark);">Subterranean Intake</h3>
@@ -276,7 +288,74 @@
                 </div>
             </section>
             
-            <!-- NEW SECTION: Technical Appendix -->
+            <!-- NEW SECTION: Interdisciplinary Team & Department Relevance -->
+            <section class="md:col-span-2 bg-gray-100 rounded-lg shadow-xl p-6 md:p-8 border-t-4" style="border-color: var(--color-primary);">
+                <h2 class="text-3xl font-bold text-center mb-6" style="color: var(--color-primary);">Interdisciplinary Team: Why It Matters to Each Field</h2>
+                <p class="text-center text-lg text-gray-600 max-w-4xl mx-auto mb-8">This project is a high-impact fusion of expertise. The research directly serves the core priorities of these four departments.</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                    
+                    <!-- Mechanical Engineering -->
+                    <div class="dept-pitch mech">
+                        <h3 class="text-xl font-bold mb-2 flex items-center" style="color: #10b981;">
+                             <span class="mr-2 text-2xl">⚙️</span> Mechanical Engineering
+                        </h3>
+                        <p class="text-sm font-semibold text-gray-700 mb-3">Focus: Thermal Management, Fluid Dynamics, CFD Modeling</p>
+                        <ul class="list-disc ml-4 text-gray-700 text-sm space-y-1">
+                            <li><strong>Challenge:</strong> Testing if a simple geometric structure can outperform complex HVAC systems.</li>
+                            <li><strong>Opportunity:</strong> Generating high-quality data on **laminar airflow** efficiency at the 26.5&deg; angle for Ph.D. and M.S. thesis work.</li>
+                            <li><strong>Impact:</strong> Defining a new, low-power thermal standard for future infrastructure and building design.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Computer Science -->
+                    <div class="dept-pitch comp">
+                        <h3 class="text-xl font-bold mb-2 flex items-center" style="color: #3b82f6;">
+                            <span class="mr-2 text-2xl">💻</span> Computer Science
+                        </h3>
+                        <p class="text-sm font-semibold text-gray-700 mb-3">Focus: Performance-per-Watt, Computational Density, PUE</p>
+                        <ul class="list-disc ml-4 text-gray-700 text-sm space-y-1">
+                            <li><strong>Challenge:</strong> Analyzing how physical geometry impacts hardware **reliability and performance** at scale.</li>
+                            <li><strong>Opportunity:</strong> Developing and running complex load-testing and monitoring protocols for the prototype to measure real-world **PUE improvement**.</li>
+                            <li><strong>Impact:</strong> Defining the optimal physical topology for next-generation **AI and GPU clusters**, currently limited by cooling constraints.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Physics -->
+                    <div class="dept-pitch phys">
+                        <h3 class="text-xl font-bold mb-2 flex items-center" style="color: #ef4444;">
+                            <span class="mr-2 text-2xl">⚛️</span> Physics
+                        </h3>
+                        <p class="text-sm font-semibold text-gray-700 mb-3">Focus: Electromagnetism, Geometric Validation, Energy Flow</p>
+                        <ul class="list-disc ml-4 text-gray-700 text-sm space-y-1">
+                            <li><strong>Challenge:</strong> Rigorously testing the **Golden Ratio (&phi;)** hypothesis for minimizing **electromagnetic interference (EMI)**.</li>
+                            <li><strong>Opportunity:</strong> Providing the **theoretical framework** and precise measurement of EM and thermal phenomena in a novel, constrained environment.</li>
+                            <li><strong>Impact:</strong> Contributing to the fundamental research on how **sacred geometry** can be applied to optimize modern energy-information systems.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            <!-- END NEW SECTION -->
+
+            <section class="md:col-span-2 bg-white rounded-lg shadow-xl p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-center mb-6" style="color: var(--color-primary);">Broader Impacts</h2>
+                <p class="text-center text-lg text-gray-600 max-w-3xl mx-auto mb-8">If successful, this project isn't just a new data center. It's a new paradigm.</p>
+                <ul class="space-y-4 max-w-2xl mx-auto">
+                    <li class="flex items-start text-lg">
+                        <span class="text-3xl mr-4">🌍</span>
+                        <div><strong class="text-xl" style="color: var(--color-primary-dark);">Sustainability:</strong> A direct, measurable reduction in the global carbon footprint of computing, aligning with net-zero goals.</div>
+                    </li>
+                    <li class="flex items-start text-lg">
+                        <span class="text-3xl mr-4">🏢</span>
+                        <div><strong class="text-xl" style="color: var(--color-primary-dark);">Architecture:</strong> A new geometric framework for HVAC and thermal management in office buildings, hospitals, and factories.</div>
+                    </li>
+                    <li class="flex items-start text-lg">
+                        <span class="text-3xl mr-4">🧠</span>
+                        <div><strong class="text-xl" style="color: var(--color-primary-dark);">Theoretical Physics:</strong> The first rigorous study to validate ancient geometric principles in a modern energy-information system.</div>
+                    </li>
+                </ul>
+            </section>
+            
             <section class="md:col-span-2 bg-gray-50 rounded-lg shadow-xl p-6 md:p-8 border-t-4" style="border-color: var(--color-primary-dark);">
                 <h2 class="text-3xl font-bold text-center mb-6" style="color: var(--color-primary-dark);">Appendix A: Technical Specifications</h2>
                 <p class="text-center text-gray-600 max-w-3xl mx-auto mb-8">Detailed geometric and dimensional specifications for the Phase 1 testable prototype.</p>
@@ -290,10 +369,10 @@
                         </div>
                         <div id="content-1" class="accordion-content px-4">
                             <ul class="list-disc ml-6 text-gray-700 space-y-2">
-                                <li>**Base Structure:** 6ft x 6ft square footprint.</li>
-                                <li>**Total Height:** Approximately 3.8ft (maintaining the Great Pyramid's ratio).</li>
-                                <li>**Structural Material:** Lightweight aluminum or reinforced composite framing.</li>
-                                <li>**Goal:** Create a scalable, repeatable module for thermal and EM testing.</li>
+                                <li><strong>Base Structure:</strong> 6ft x 6ft square footprint.</li>
+                                <li><strong>Total Height:</strong> Approximately 3.8ft (maintaining the Great Pyramid's ratio).</li>
+                                <li><strong>Structural Material:</strong> Lightweight aluminum or reinforced composite framing.</li>
+                                <li><strong>Goal:</strong> Create a scalable, repeatable module for thermal and EM testing.</li>
                             </ul>
                         </div>
                     </div>
@@ -306,9 +385,9 @@
                         </div>
                         <div id="content-2" class="accordion-content px-4">
                             <ul class="list-disc ml-6 text-gray-700 space-y-2">
-                                <li>**Grand Gallery Angle:** Precisely 26.5&deg; from horizontal, optimized for natural buoyancy and laminar airflow initiation.</li>
-                                <li>**Golden Ratio Spacing (&phi;):** Server racks and component placement will be separated by distances following the 1.618 ratio to minimize electromagnetic interference (EMI).</li>
-                                <li>**Thermal Gradient:** The design is optimized for a strong natural thermal gradient, moving heat from the cool base (Level 1) to the hot apex (Level 4) without forced-air HVAC assistance.</li>
+                                <li><strong>Grand Gallery Angle:</strong> Precisely 26.5&deg; from horizontal, optimized for natural buoyancy and laminar airflow initiation.</li>
+                                <li><strong>Golden Ratio Spacing (&phi;):</strong> Server racks and component placement will be separated by distances following the 1.618 ratio to minimize electromagnetic interference (EMI).</li>
+                                <li><strong>Thermal Gradient:</strong> The design is optimized for a strong natural thermal gradient, moving heat from the cool base (Level 1) to the hot apex (Level 4) without forced-air HVAC assistance.</li>
                             </ul>
                         </div>
                     </div>
@@ -322,16 +401,15 @@
                         <div id="content-3" class="accordion-content px-4">
                             <p>Components are stratified based on their thermal design power (TDP):</p>
                             <ul class="list-disc ml-6 text-gray-700 space-y-2">
-                                <li>**Level 4 (Apex):** High-TDP processors (GPUs/Accelerators).</li>
-                                <li>**Level 3 (Gallery):** Standard-TDP servers (Main Compute).</li>
-                                <li>**Level 2 (Queen's):** Low-TDP servers (I/O, Networking, Storage).</li>
+                                <li><strong>Level 4 (Apex):</strong> High-TDP processors (GPUs/Accelerators).</li>
+                                <li><strong>Level 3 (Gallery):</strong> Standard-TDP servers (Main Compute).</li>
+                                <li><strong>Level 2 (Queen's):</strong> Low-TDP servers (I/O, Networking, Storage).</li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </section>
-            <!-- END NEW SECTION -->
-
+            
             <section class="bg-white rounded-lg shadow-xl p-6 md:p-8">
                 <h2 class="text-3xl font-bold text-center mb-6" style="color: var(--color-primary);">Phase 1 Budget: $15k - $25k</h2>
                 <p class="text-gray-600 text-center mb-4">A lean, high-impact budget for the 6-month proof-of-concept prototype.</p>
@@ -369,17 +447,17 @@
                                 <div>
                                     <h3 class="font-semibold" style="color: var(--color-primary-dark);">Vogel, H. (1979). A better way to construct the sunflower head.</h3>
                                     <p class="text-sm text-gray-500">The Mathematical Gazette, 64(429), 329-335.</p>
-                                    <p class="mt-2">**Annotation:** This foundational work established the Golden Angle (derived from &phi;) as the optimal mathematical principle for maximizing packing efficiency and minimizing overlap in natural systems (like the seeds of a sunflower). We apply this principle directly to server spacing to reduce electromagnetic and thermal interference.</p>
+                                    <p class="mt-2"><strong>Annotation:</strong> This foundational work established the Golden Angle (derived from &phi;) as the optimal mathematical principle for maximizing packing efficiency and minimizing overlap in natural systems (like the seeds of a sunflower). We apply this principle directly to server spacing to reduce electromagnetic and thermal interference.</p>
                                 </div>
                                 <div>
                                     <h3 class="font-semibold" style="color: var(--color-primary-dark);">Davidovits, J., et al. (2018). Ancient Geopolymer Tech & Pyramid Construction.</h3>
                                     <p class="text-sm text-gray-500">Various peer-reviewed articles and conference proceedings.</p>
-                                    <p class="mt-2">**Annotation:** Research into the chemical and physical properties of the materials and geometry of ancient structures, suggesting a highly refined, non-symbolic understanding of physics and material science that informed construction for stability and potential energy manipulation.</p>
+                                    <p class="mt-2"><strong>Annotation:</strong> Research into the chemical and physical properties of the materials and geometry of ancient structures, suggesting a highly refined, non-symbolic understanding of physics and material science that informed construction for stability and potential energy manipulation.</p>
                                 </div>
                                 <div>
                                     <h3 class="font-semibold" style="color: var(--color-primary-dark);">Great Pyramid Geometric Analysis</h3>
                                     <p class="text-sm text-gray-500">Historical engineering and architectural studies.</p>
-                                    <p class="mt-2">**Annotation:** The consistent, precise internal angles (e.g., the 26.5&deg; Grand Gallery) suggest deliberate engineering choices that govern the movement of air or energy within the structure. This provides the direct analog for our proposed laminar flow system.</p>
+                                    <p class="mt-2"><strong>Annotation:</strong> The consistent, precise internal angles (e.g., the 26.5&deg; Grand Gallery) suggest deliberate engineering choices that govern the movement of air or energy within the structure. This provides the direct analog for our proposed laminar flow system.</p>
                                 </div>
                             </div>
                         </div>
@@ -388,27 +466,7 @@
             </section>
             <!-- END NEW SECTION -->
 
-            <section class="md:col-span-2 bg-white rounded-lg shadow-xl p-6 md:p-8">
-                <h2 class="text-3xl font-bold text-center mb-6" style="color: var(--color-primary);">Broader Impacts</h2>
-                <p class="text-center text-lg text-gray-600 max-w-3xl mx-auto mb-8">If successful, this project isn't just a new data center. It's a new paradigm.</p>
-                <ul class="space-y-4 max-w-2xl mx-auto">
-                    <li class="flex items-start text-lg">
-                        <span class="text-3xl mr-4">🌍</span>
-                        <div><strong class="text-xl" style="color: var(--color-primary-dark);">Sustainability:</strong> A direct, measurable reduction in the global carbon footprint of computing, aligning with net-zero goals.</div>
-                    </li>
-                    <li class="flex items-start text-lg">
-                        <span class="text-3xl mr-4">🏢</span>
-                        <div><strong class="text-xl" style="color: var(--color-primary-dark);">Architecture:</strong> A new geometric framework for HVAC and thermal management in office buildings, hospitals, and factories.</div>
-                    </li>
-                    <li class="flex items-start text-lg">
-                        <span class="text-3xl mr-4">🧠</span>
-                        <div><strong class="text-xl" style="color: var(--color-primary-dark);">Theoretical Physics:</strong> The first rigorous study to validate ancient geometric principles in a modern energy-information system.</div>
-                    </li>
-                </ul>
-            </section>
-            
-            <!-- NEW SECTION: Call to Action -->
-            <section id="call-to-action-section" class="md:col-span-2 bg-white rounded-lg shadow-xl p-6 md:p-8 border-t-4" style="border-color: #f59e0b;">
+            <section class="md:col-span-2 bg-white rounded-lg shadow-xl p-6 md:p-8 border-t-4" style="border-color: #f59e0b;">
                 <h2 class="text-3xl font-bold text-center mb-6 text-gray-800">✅ CALL TO ACTION: Support This Research</h2>
                 <p class="text-center text-xl font-semibold mb-8 text-gray-600">The success of Phase 1 requires key departmental support and resources.</p>
 
@@ -418,10 +476,10 @@
                         <h3 class="text-2xl font-bold mb-3" style="color: var(--color-primary-dark);">Faculty Advisor Request</h3>
                         <p class="text-gray-700 mb-4">We are seeking a faculty mentor from each of these four disciplines to guide the cross-disciplinary work:</p>
                         <ul class="list-disc ml-6 text-lg space-y-2">
-                            <li>**Mechanical Engineering:** Thermal lead (CFD Modeling)</li>
-                            <li>**Computer Science:** Performance lead (Server load/PUE)</li>
-                            <li>**Electrical Engineering:** EM field lead (&phi; ratio testing)</li>
-                            <li>**Physics:** Theoretical framework (Geometric validation)</li>
+                            <li><strong>Mechanical Engineering:</strong> Thermal lead (CFD Modeling)</li>
+                            <li><strong>Computer Science:</strong> Performance lead (Server load/PUE)</li>
+                            <li><strong>Electrical Engineering:</strong> EM field lead (&phi; ratio testing)</li>
+                            <li><strong>Physics:</strong> Theoretical framework (Geometric validation)</li>
                         </ul>
                     </div>
 
@@ -430,21 +488,19 @@
                         <h3 class="text-2xl font-bold mb-3" style="color: var(--color-primary-dark);">Lab Space Requirement</h3>
                         <p class="text-gray-700 mb-4">A dedicated, secure space is needed for the 6-month prototype construction and testing:</p>
                         <ul class="list-disc ml-6 text-lg space-y-2">
-                            <li>**Size:** Approximately 200 sq. ft. of floor space.</li>
-                            <li>**Access:** Needs reliable power access and moderate ventilation.</li>
-                            <li>**Duration:** Required for the full 6-month duration of the Proof-of-Concept (Phase 1).</li>
+                            <li><strong>Size:</strong> Approximately 200 sq. ft. of floor space.</li>
+                            <li><strong>Access:</strong> Needs reliable power access and moderate ventilation.</li>
+                            <li><strong>Duration:</strong> Required for the full 6-month duration of the Proof-of-Concept (Phase 1).</li>
                         </ul>
                     </div>
                 </div>
             </section>
-            <!-- END NEW SECTION -->
 
 
         </main>
         
         <footer class="text-center mt-12 py-6 border-t border-gray-300">
             <p class="text-gray-500">This infographic presents a research proposal for the Pyramid Data Center project.</p>
-            <p class="text-gray-500 mt-2">Preliminary designs and research hosted on GitHub Pages: <a href="https://lunabriana98-creator.github.io/pyramidai-infrastructure/" class="text-blue-600 hover:underline">lunabriana98-creator.github.io/pyramidai-infrastructure/</a></p>
             <p id="error-message" class="text-red-600 mt-4 font-semibold hidden">An error occurred. Please check the console for details.</p>
         </footer>
     </div>
