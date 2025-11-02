@@ -53,7 +53,8 @@
             text-align: center;
         }
         .flow-arrow {
-            color: #9ca3af;
+            /* Unicode Down Arrow */
+            color: var(--color-primary); 
             font-size: 2.5rem;
             font-weight: 900;
             line-height: 1;
@@ -118,6 +119,24 @@
             transform: rotate(-135deg); 
             transition: transform 1s ease-in-out;
         }
+        .accordion-header {
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .accordion-header:hover {
+            background-color: #f3f4f6;
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out;
+        }
+        .accordion-content.active {
+            max-height: 1000px; /* Large value for smooth transition */
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            overflow-y: auto; /* CRITICAL FIX: Ensures scrollability */
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -153,53 +172,30 @@
                 <h2 class="text-3xl font-bold text-center mb-6" style="color: var(--color-primary);">The Hypothesis: Ancient Wisdom</h2>
                 <p id="originalHypothesis" class="text-center text-lg text-gray-600 max-w-3xl mx-auto mb-8">We propose that ancient geometric principles, encoded in structures like the Great Pyramid, are not symbolic. They are a framework for optimizing energy flow. We can apply this to modern computational infrastructure.</p>
                 <div class="flex flex-col md:flex-row justify-center gap-8">
-                    <div class="flex-1 bg-gray-50 rounded-lg p-6 border-l-4 border-accent">
+                    <div class="flex-1 bg-gray-50 rounded-lg p-6 border-l-4" style="border-color: var(--color-accent);">
                         <h3 class="text-2xl font-bold mb-3" style="color: var(--color-primary-dark);">The &phi; (Phi) Ratio: 1.618</h3>
                         <p class="text-base text-gray-700">Found throughout nature, the Golden Ratio (&phi;) and its corresponding Golden Angle (137.5&deg;) are optimal for packing and minimizing interference. We will use this to space servers, creating natural harmonic separation and reducing EM interference.</p>
                     </div>
-                    <div class="flex-1 bg-gray-50 rounded-lg p-6 border-l-4 border-accent">
+                    <div class="flex-1 bg-gray-50 rounded-lg p-6 border-l-4" style="border-color: var(--color-accent);">
                         <h3 class="text-2xl font-bold mb-3" style="color: var(--color-primary-dark);">The 26.5&deg; Angle</h3>
                         <p class="text-base text-gray-700">The precise angle of the Great Pyramid's Grand Gallery is not accidental. This angle is ideal for promoting **laminar airflow**—a smooth, non-turbulent flow that is dramatically more efficient for heat transfer.</p>
                     </div>
                 </div>
             </section>
 
-            <section id="rewrite-section" class="md:col-span-2 bg-gray-50 rounded-lg shadow-md p-6 md:p-8 border-t-4" style="border-color: var(--color-accent);">
-                <h2 class="text-3xl font-bold text-center mb-6" style="color: var(--color-primary-dark);">✨ Dynamic Pitch Rewriter</h2>
-                <p class="text-center text-gray-600 max-w-2xl mx-auto mb-6">Select an audience to instantly rewrite the "Hypothesis" section for maximum impact and relevance, focusing the core value proposition.</p>
-                
-                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6">
-                    <label for="audience-select" class="font-semibold">Target Audience:</label>
-                    <select id="audience-select" class="p-2 border border-gray-300 rounded-md focus:ring focus:ring-accent">
-                        <option value="Investor">Investor (Focus on ROI & Market)</option>
-                        <option value="Environmentalist">Environmentalist (Focus on Sustainability)</option>
-                        <option value="Architect">Architect (Focus on Design & Structure)</option>
-                    </select>
-                    <button id="rewrite-button" class="llm-button flex items-center justify-center" data-original-text="✨ Rewrite Hypothesis">
-                        <span id="rewrite-text">✨ Rewrite Hypothesis</span>
-                        <div id="rewrite-spinner" class="hidden w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin ml-2"></div>
-                    </button>
-                </div>
-
-                <div id="rewrite-result-container" class="mt-6 p-4 rounded-lg bg-white border border-gray-300 hidden">
-                    <h3 class="text-xl font-bold mb-2" style="color: var(--color-primary-dark);">Rewritten Pitch for <span id="rewritten-audience"></span></h3>
-                    <p id="rewritten-text" class="text-gray-700 italic"></p>
-                </div>
-            </section>
-            
-            <section id="ask-the-data-section" class="md:col-span-2 bg-white rounded-lg shadow-xl p-6 md:p-8">
-                <h2 class="text-3xl font-bold text-center mb-6" style="color: var(--color-primary);">❓ Ask the Data</h2>
-                <p class="text-center text-gray-600 max-w-2xl mx-auto mb-6">Need a quick summary? Ask for clarification on the technical terms or project goals.</p>
+            <section id="ask-the-data-section" class="md:col-span-2 bg-gray-50 rounded-lg shadow-xl p-6 md:p-8 border-t-4" style="border-color: var(--color-accent);">
+                <h2 class="text-3xl font-bold text-center mb-6" style="color: var(--color-primary-dark);">💬 Ask the Project / Refine the Pitch (Gemini AI)</h2>
+                <p class="text-center text-gray-600 max-w-2xl mx-auto mb-6">Ask for a summary, or try tailoring your message. <br class="hidden sm:inline"> Example queries: "Write a pitch to a mechanical engineer" or "Summarize the literature review."</p>
                 
                 <div class="flex flex-col gap-4 max-w-3xl mx-auto">
                     <div class="flex">
-                        <input type="text" id="ask-input" placeholder="e.g., What is laminar flow?" class="flex-grow p-3 border border-gray-300 rounded-l-lg focus:ring focus:ring-accent focus:outline-none" />
+                        <input type="text" id="ask-input" placeholder="e.g., What is the biggest takeaway for the Physics department?" class="flex-grow p-3 border border-gray-300 rounded-l-lg focus:ring focus:ring-accent focus:outline-none" />
                         <button id="ask-button" class="llm-button flex items-center justify-center rounded-l-none" data-original-text="Ask">
                             <span id="ask-text">Ask</span>
                             <div id="ask-spinner" class="hidden w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin ml-2"></div>
                         </button>
                     </div>
-                    <div id="ask-result-container" class="p-4 rounded-lg bg-gray-50 border border-gray-300 hidden">
+                    <div id="ask-result-container" class="p-4 rounded-lg bg-white border border-gray-300 hidden">
                         <p class="text-gray-700 italic" id="ask-result-text">Answer will appear here...</p>
                     </div>
                 </div>
@@ -207,7 +203,7 @@
 
             <section class="bg-white rounded-lg shadow-xl p-6 md:p-8">
                 <h2 class="text-3xl font-bold text-center mb-6" style="color: var(--color-primary);">The Science of Flow</h2>
-                <p class="text-gray-600 text-center mb-4">By arranging servers at a 26.5&deg; angle, we encourage natural buoyancy and create a highly efficient laminar flow, which is ~40% more effective at transferring heat than standard turbulent flow.</p>
+                <p class="text-gray-600 text-center mb-4">By arranging servers at a 26.5&deg; angle, we encourage natural buoyancy and create a highly efficient **laminar flow**, which is ~40% more effective at transferring heat than standard turbulent flow.</p>
                 <div class="chart-container" style="max-height: 450px;">
                     <canvas id="laminarFlowChart"></canvas>
                 </div>
@@ -231,6 +227,7 @@
                             </div>
                         </div>
                         <div class="absolute inset-0">
+                             <!-- This gauge is purely visual using CSS to represent the 30% goal -->
                              <div class="gauge-progress" style="transform: rotate(135deg);">
                                 <div class="gauge-half" style="transform: rotate(45deg);"></div> 
                             </div>
@@ -258,27 +255,83 @@
                         <h3 class="text-xl font-bold" style="color: var(--color-primary-dark);">King's Chamber</h3>
                         <p class="text-gray-700">GPU / High-Performance Compute (Max Heat)</p>
                     </div>
-                    <div class="flow-arrow">↓</div>
+                    <div class="flow-arrow">&#x2193;</div> <!-- Down Arrow Fix -->
                     <div class="flow-step">
                         <span class="text-sm font-bold text-gray-500">LEVEL 3: GALLERY</span>
                         <h3 class="text-xl font-bold" style="color: var(--color-primary-dark);">Grand Gallery (26.5&deg;)</h3>
                         <p class="text-gray-700">Main Computational Servers (High Heat)</p>
                     </div>
-                    <div class="flow-arrow">↓</div>
+                    <div class="flow-arrow">&#x2193;</div> <!-- Down Arrow Fix -->
                     <div class="flow-step">
                         <span class="text-sm font-bold text-gray-500">LEVEL 2: CHAMBER</span>
                         <h3 class="text-xl font-bold" style="color: var(--color-primary-dark);">Queen's Chamber</h3>
                         <p class="text-gray-700">Input/Output Servers (Low Heat)</p>
                     </div>
-                    <div class="flow-arrow">↓</div>
+                    <div class="flow-arrow">&#x2193;</div> <!-- Down Arrow Fix -->
                     <div class="flow-step">
                         <span class="text-sm font-bold text-gray-500">LEVEL 1: BASE</span>
                         <h3 class="text-xl font-bold" style="color: var(--color-primary-dark);">Subterranean Intake</h3>
-                        <p class="text-gray-700">Cool Air Intake & Power Distribution</p>
+                        <p class="text-gray-700">Passive, Floor-Level Cool Air Intake & Power Distribution. This is the starting point for the natural convective flow.</p>
                     </div>
                 </div>
             </section>
             
+            <!-- NEW SECTION: Technical Appendix -->
+            <section class="md:col-span-2 bg-gray-50 rounded-lg shadow-xl p-6 md:p-8 border-t-4" style="border-color: var(--color-primary-dark);">
+                <h2 class="text-3xl font-bold text-center mb-6" style="color: var(--color-primary-dark);">Appendix A: Technical Specifications</h2>
+                <p class="text-center text-gray-600 max-w-3xl mx-auto mb-8">Detailed geometric and dimensional specifications for the Phase 1 testable prototype.</p>
+
+                <div class="max-w-4xl mx-auto space-y-4">
+                    <!-- ACCORDION 1: Prototype Dimensions -->
+                    <div class="border rounded-lg bg-white">
+                        <div class="accordion-header p-4 flex justify-between items-center text-lg font-semibold" data-target="content-1">
+                            <span>Prototype Dimensions (Small-Scale Test Unit)</span>
+                            <span class="arrow text-2xl transform rotate-0 transition-transform duration-300">+</span>
+                        </div>
+                        <div id="content-1" class="accordion-content px-4">
+                            <ul class="list-disc ml-6 text-gray-700 space-y-2">
+                                <li>**Base Structure:** 6ft x 6ft square footprint.</li>
+                                <li>**Total Height:** Approximately 3.8ft (maintaining the Great Pyramid's ratio).</li>
+                                <li>**Structural Material:** Lightweight aluminum or reinforced composite framing.</li>
+                                <li>**Goal:** Create a scalable, repeatable module for thermal and EM testing.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- ACCORDION 2: Geometric & Thermal Parameters -->
+                    <div class="border rounded-lg bg-white">
+                        <div class="accordion-header p-4 flex justify-between items-center text-lg font-semibold" data-target="content-2">
+                            <span>Geometric & Thermal Parameters</span>
+                            <span class="arrow text-2xl transform rotate-0 transition-transform duration-300">+</span>
+                        </div>
+                        <div id="content-2" class="accordion-content px-4">
+                            <ul class="list-disc ml-6 text-gray-700 space-y-2">
+                                <li>**Grand Gallery Angle:** Precisely 26.5&deg; from horizontal, optimized for natural buoyancy and laminar airflow initiation.</li>
+                                <li>**Golden Ratio Spacing (&phi;):** Server racks and component placement will be separated by distances following the 1.618 ratio to minimize electromagnetic interference (EMI).</li>
+                                <li>**Thermal Gradient:** The design is optimized for a strong natural thermal gradient, moving heat from the cool base (Level 1) to the hot apex (Level 4) without forced-air HVAC assistance.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- ACCORDION 3: Computational Load Distribution -->
+                    <div class="border rounded-lg bg-white">
+                        <div class="accordion-header p-4 flex justify-between items-center text-lg font-semibold" data-target="content-3">
+                            <span>Computational Load Distribution</span>
+                            <span class="arrow text-2xl transform rotate-0 transition-transform duration-300">+</span>
+                        </div>
+                        <div id="content-3" class="accordion-content px-4">
+                            <p>Components are stratified based on their thermal design power (TDP):</p>
+                            <ul class="list-disc ml-6 text-gray-700 space-y-2">
+                                <li>**Level 4 (Apex):** High-TDP processors (GPUs/Accelerators).</li>
+                                <li>**Level 3 (Gallery):** Standard-TDP servers (Main Compute).</li>
+                                <li>**Level 2 (Queen's):** Low-TDP servers (I/O, Networking, Storage).</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- END NEW SECTION -->
+
             <section class="bg-white rounded-lg shadow-xl p-6 md:p-8">
                 <h2 class="text-3xl font-bold text-center mb-6" style="color: var(--color-primary);">Phase 1 Budget: $15k - $25k</h2>
                 <p class="text-gray-600 text-center mb-4">A lean, high-impact budget for the 6-month proof-of-concept prototype.</p>
@@ -299,6 +352,42 @@
                 <p class="text-gray-600 text-center mt-6">This cross-departmental collaboration provides unparalleled research and thesis opportunities for both undergraduate and graduate students.</p>
             </section>
             
+            <!-- NEW SECTION: Supporting Research / Lit Review -->
+            <section class="md:col-span-2 bg-gray-50 rounded-lg shadow-xl p-6 md:p-8 border-t-4" style="border-color: var(--color-accent);">
+                <h2 class="text-3xl font-bold text-center mb-6" style="color: var(--color-primary);">Appendix B: Supporting Research & Literature</h2>
+                <p class="text-center text-gray-600 max-w-3xl mx-auto mb-8">Core academic and scientific foundations supporting the geometric hypothesis.</p>
+
+                <div class="max-w-4xl mx-auto space-y-6">
+                    <!-- ACCORDION 4: Literature Review -->
+                    <div class="border rounded-lg bg-white">
+                        <div class="accordion-header p-4 flex justify-between items-center text-lg font-semibold" data-target="content-4">
+                            <span>Annotated Bibliography</span>
+                            <span class="arrow text-2xl transform rotate-0 transition-transform duration-300">+</span>
+                        </div>
+                        <div id="content-4" class="accordion-content px-4">
+                            <div class="space-y-4 text-gray-700">
+                                <div>
+                                    <h3 class="font-semibold" style="color: var(--color-primary-dark);">Vogel, H. (1979). A better way to construct the sunflower head.</h3>
+                                    <p class="text-sm text-gray-500">The Mathematical Gazette, 64(429), 329-335.</p>
+                                    <p class="mt-2">**Annotation:** This foundational work established the Golden Angle (derived from &phi;) as the optimal mathematical principle for maximizing packing efficiency and minimizing overlap in natural systems (like the seeds of a sunflower). We apply this principle directly to server spacing to reduce electromagnetic and thermal interference.</p>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold" style="color: var(--color-primary-dark);">Davidovits, J., et al. (2018). Ancient Geopolymer Tech & Pyramid Construction.</h3>
+                                    <p class="text-sm text-gray-500">Various peer-reviewed articles and conference proceedings.</p>
+                                    <p class="mt-2">**Annotation:** Research into the chemical and physical properties of the materials and geometry of ancient structures, suggesting a highly refined, non-symbolic understanding of physics and material science that informed construction for stability and potential energy manipulation.</p>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold" style="color: var(--color-primary-dark);">Great Pyramid Geometric Analysis</h3>
+                                    <p class="text-sm text-gray-500">Historical engineering and architectural studies.</p>
+                                    <p class="mt-2">**Annotation:** The consistent, precise internal angles (e.g., the 26.5&deg; Grand Gallery) suggest deliberate engineering choices that govern the movement of air or energy within the structure. This provides the direct analog for our proposed laminar flow system.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- END NEW SECTION -->
+
             <section class="md:col-span-2 bg-white rounded-lg shadow-xl p-6 md:p-8">
                 <h2 class="text-3xl font-bold text-center mb-6" style="color: var(--color-primary);">Broader Impacts</h2>
                 <p class="text-center text-lg text-gray-600 max-w-3xl mx-auto mb-8">If successful, this project isn't just a new data center. It's a new paradigm.</p>
@@ -317,11 +406,45 @@
                     </li>
                 </ul>
             </section>
+            
+            <!-- NEW SECTION: Call to Action -->
+            <section id="call-to-action-section" class="md:col-span-2 bg-white rounded-lg shadow-xl p-6 md:p-8 border-t-4" style="border-color: #f59e0b;">
+                <h2 class="text-3xl font-bold text-center mb-6 text-gray-800">✅ CALL TO ACTION: Support This Research</h2>
+                <p class="text-center text-xl font-semibold mb-8 text-gray-600">The success of Phase 1 requires key departmental support and resources.</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                    <!-- Advisor Request -->
+                    <div class="p-6 rounded-lg bg-gray-50 border-l-4 border-yellow-500 shadow-lg">
+                        <h3 class="text-2xl font-bold mb-3" style="color: var(--color-primary-dark);">Faculty Advisor Request</h3>
+                        <p class="text-gray-700 mb-4">We are seeking a faculty mentor from each of these four disciplines to guide the cross-disciplinary work:</p>
+                        <ul class="list-disc ml-6 text-lg space-y-2">
+                            <li>**Mechanical Engineering:** Thermal lead (CFD Modeling)</li>
+                            <li>**Computer Science:** Performance lead (Server load/PUE)</li>
+                            <li>**Electrical Engineering:** EM field lead (&phi; ratio testing)</li>
+                            <li>**Physics:** Theoretical framework (Geometric validation)</li>
+                        </ul>
+                    </div>
+
+                    <!-- Lab Space Request -->
+                    <div class="p-6 rounded-lg bg-gray-50 border-l-4 border-yellow-500 shadow-lg">
+                        <h3 class="text-2xl font-bold mb-3" style="color: var(--color-primary-dark);">Lab Space Requirement</h3>
+                        <p class="text-gray-700 mb-4">A dedicated, secure space is needed for the 6-month prototype construction and testing:</p>
+                        <ul class="list-disc ml-6 text-lg space-y-2">
+                            <li>**Size:** Approximately 200 sq. ft. of floor space.</li>
+                            <li>**Access:** Needs reliable power access and moderate ventilation.</li>
+                            <li>**Duration:** Required for the full 6-month duration of the Proof-of-Concept (Phase 1).</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            <!-- END NEW SECTION -->
+
 
         </main>
         
         <footer class="text-center mt-12 py-6 border-t border-gray-300">
             <p class="text-gray-500">This infographic presents a research proposal for the Pyramid Data Center project.</p>
+            <p class="text-gray-500 mt-2">Preliminary designs and research hosted on GitHub Pages: <a href="https://lunabriana98-creator.github.io/pyramidai-infrastructure/" class="text-blue-600 hover:underline">lunabriana98-creator.github.io/pyramidai-infrastructure/</a></p>
             <p id="error-message" class="text-red-600 mt-4 font-semibold hidden">An error occurred. Please check the console for details.</p>
         </footer>
     </div>
@@ -344,13 +467,14 @@
             const fullInfographicContext = `
                 Title: Re-engineering the Data Center using Pyramid Geometry.
                 Problem: Data centers consume 1-2% of global electricity, with 40% of that used for cooling.
-                Hypothesis: Ancient geometric principles (Phi ratio 1.618 for server spacing and 26.5° angle for laminar airflow) can optimize energy flow and thermal efficiency.
-                Science: 26.5° angle encourages laminar flow, which is ~40% more efficient than standard turbulent flow for heat transfer.
+                Hypothesis: Ancient geometric principles (Phi ratio 1.618 for server spacing and 26.5 degree angle for laminar airflow) can optimize energy flow and thermal efficiency.
+                Science: 26.5 degree angle encourages laminar flow, which is ~40% more efficient than standard turbulent flow for heat transfer.
                 Predictions: 30-50% reduction in cooling energy consumption; Improved PUE; Reduced EM Interference.
-                Prototype Design: 4-level structure (Base/Intake, Queen's/IO, Gallery/Compute at 26.5°, King's/GPU).
-                Phase 1 Budget ($15k total): Servers ($6k), Frame/Fabrication ($4k), Cooling System ($2.5k), Sensors/DAQ ($2.5k).
+                Prototype Design: 4-level structure (Base/Intake: Passive, floor-level cool air intake; Queen's/IO; Gallery/Compute at 26.5 degrees; King's/GPU). Base is 6ft x 6ft, approx 3.8ft high. Components stratified by heat (TDP).
+                Phase 1 Budget ($15k - $25k total): Servers ($6,000), Frame/Fabrication ($4,000), Cooling System ($2,500), Sensors/DAQ ($2,500).
                 Team: Mechanical Engineering, Computer Science, Electrical Engineering, Physics.
-                Impacts: Sustainability (carbon reduction), Architecture (HVAC framework), Theoretical Physics (validating ancient geometry).
+                Literature: Vogel (1979) on Phi Ratio packing; Davidovits et al. on Geopolymer tech; Great Pyramid architectural studies.
+                Call to Action: Requesting a faculty advisor from each of the four team departments and 200 sq ft of lab space for the 6-month phase.
             `;
 
             const tooltipTitleCallback = (tooltipItems) => {
@@ -385,7 +509,7 @@
                 return lines.filter(line => line.length > 0);
             }
 
-            const baseChartOptions = (title, position = 'bottom') => ({
+            const baseChartOptions = (title, position = 'top') => ({
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
@@ -421,6 +545,7 @@
             createFlowChart();
             createBudgetChart();
             setupGeminiFeatures();
+            setupAccordion();
 
             function createCoolingChart() {
                 const ctx = document.getElementById('coolingDonutChart')?.getContext('2d');
@@ -439,7 +564,7 @@
                         }]
                     },
                     options: {
-                        ...baseChartOptions(),
+                        ...baseChartOptions('Data Center Energy Distribution', 'bottom'),
                         cutout: '70%',
                     }
                 });
@@ -494,6 +619,7 @@
                 const ctx = document.getElementById('budgetDonutChart')?.getContext('2d');
                 if (!ctx) return;
 
+                // Ensure labels are wrapped to prevent overflow
                 const labels = [
                     'Servers ($6,000)', 
                     'Frame / Fabrication ($4,000)', 
@@ -524,7 +650,7 @@
                         }]
                     },
                     options: {
-                        ...baseChartOptions(null, 'top'), 
+                        ...baseChartOptions('Phase 1 Budget Breakdown', 'top'), // Legend position fixed to 'top'
                         cutout: '70%',
                     }
                 });
@@ -586,53 +712,20 @@
             }
 
             function setupGeminiFeatures() {
-                const rewriteButton = document.getElementById('rewrite-button');
-                const audienceSelect = document.getElementById('audience-select');
-                const rewrittenTextElement = document.getElementById('rewritten-text');
-                const rewrittenAudienceElement = document.getElementById('rewritten-audience');
-                const rewriteResultContainer = document.getElementById('rewrite-result-container');
-                const originalHypothesis = document.getElementById('originalHypothesis').textContent.trim();
-                
                 const askButton = document.getElementById('ask-button');
                 const askInput = document.getElementById('ask-input');
                 const askResultContainer = document.getElementById('ask-result-container');
                 const askResultText = document.getElementById('ask-result-text');
 
-                rewriteButton.addEventListener('click', async () => {
-                    const audienceSelectText = audienceSelect.options[audienceSelect.selectedIndex].text.split('(')[0].trim();
-
-                    const systemPrompt = "You are an expert pitch writer. Your goal is to rewrite the provided research hypothesis to maximize its appeal to the specified target audience. The rewritten text must be a single, concise paragraph of a maximum of three sentences. Do not use markdown formatting.";
-                    const userQuery = `Target Audience: ${audienceSelectText}\n\nOriginal Hypothesis:\n"${originalHypothesis}"`;
-
-                    showLoading('rewrite-button', 'rewrite-text', 'rewrite-spinner', true);
-                    rewriteResultContainer.classList.add('hidden');
-                    
-                    try {
-                        const rewrittenText = await callTextGemini(userQuery, systemPrompt);
-                        
-                        rewrittenAudienceElement.textContent = audienceSelectText;
-                        rewrittenTextElement.textContent = rewrittenText.trim();
-                        rewriteResultContainer.classList.remove('hidden');
-
-                    } catch (error) {
-                        document.getElementById('error-message').classList.remove('hidden');
-                        console.error('Gemini Rewrite Error:', error);
-                        rewrittenTextElement.textContent = `Error: Failed to generate pitch for ${audienceSelectText}. Please check console.`;
-                        rewriteResultContainer.classList.remove('hidden');
-                    } finally {
-                        showLoading('rewrite-button', 'rewrite-text', 'rewrite-spinner', false);
-                    }
-                });
-
                 askButton.addEventListener('click', async () => {
                     const query = askInput.value.trim();
                     if (!query) {
-                        askResultText.textContent = "Please enter a question about the project or the data.";
+                        askResultText.textContent = "Please enter a question or a pitch angle to refine.";
                         askResultContainer.classList.remove('hidden');
                         return;
                     }
                     
-                    const systemPrompt = `You are a helpful project assistant specializing in data center technology and sacred geometry. Use the provided context to answer the user's question clearly and concisely. Do not add any new information. If the information is not in the context, state that you cannot answer based on the provided data. Context: ${fullInfographicContext}`;
+                    const systemPrompt = `You are a project pitch refiner. Your goal is to use the provided project context to generate a concise, one-paragraph summary or pitch angle based on the user's query. Examples: 'Summarize the budget' or 'Write a pitch to a mechanical engineer'. Strictly use only the provided context. Context: ${fullInfographicContext}`;
                     
                     showLoading('ask-button', 'ask-text', 'ask-spinner', true);
                     askResultContainer.classList.add('hidden');
@@ -652,6 +745,36 @@
                     } finally {
                         showLoading('ask-button', 'ask-text', 'ask-spinner', false);
                     }
+                });
+            }
+
+            function setupAccordion() {
+                document.querySelectorAll('.accordion-header').forEach(header => {
+                    header.addEventListener('click', () => {
+                        const targetId = header.getAttribute('data-target');
+                        const content = document.getElementById(targetId);
+                        const arrow = header.querySelector('.arrow');
+
+                        const isActive = content.classList.contains('active');
+
+                        // Close all other open accordions
+                        document.querySelectorAll('.accordion-content').forEach(c => {
+                            if (c !== content) {
+                                c.classList.remove('active');
+                                c.previousElementSibling.querySelector('.arrow').classList.remove('rotate-90');
+                            }
+                        });
+
+                        // Toggle the clicked accordion
+                        if (isActive) {
+                             content.classList.remove('active');
+                             arrow.classList.remove('rotate-90');
+                        } else {
+                             content.classList.add('active');
+                             arrow.classList.add('rotate-90');
+                             // Note: The max-height is set high in CSS to allow scroll transition and overflow-y: auto
+                        }
+                    });
                 });
             }
         });
