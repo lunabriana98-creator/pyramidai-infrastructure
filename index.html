@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pyramid Data Center Infographic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-primary-dark: #004AAD;
+            --color-primary: #0056D6;
+            --color-primary-light: #007BFF;
+            --color-accent: #4DA6FF;
+            --color-accent-light: #99CFFF;
+            --color-text: #1f2937;
+            --color-bg: #f9fafb;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            scroll-behavior: smooth;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 350px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+                max-height: 400px;
+            }
+        }
+        .flow-step {
+            position: relative;
+            background-color: white;
+            border-left: 6px solid var(--color-primary-light);
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            width: 80%;
+            text-align: center;
+        }
+        .flow-arrow {
+            color: #9ca3af;
+            font-size: 2.5rem;
+            font-weight: 900;
+            line-height: 1;
+        }
+        .team-card {
+            background-color: var(--color-primary-dark);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.125rem;
+            transition: all 0.2s ease-in-out;
+        }
+        .team-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 74, 173, 0.3), 0 4px 6px -2px rgba(0, 74, 173, 0.2);
+        }
+        .llm-button {
+            background-color: var(--color-primary-dark);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 700;
+            transition: background-color 0.2s;
+        }
+        .llm-button:hover {
+            background-color: var(--color-primary);
+        }
+        .llm-button:disabled {
+            background-color: #9ca3af;
+            cursor: not-allowed;
+        }
+        .gauge-ring {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--color-primary-dark);
+            box-shadow: 0 0 0 10px var(--color-accent-light) inset;
+        }
+        .gauge-progress {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            clip: rect(0, 75px, 150px, 0);
+            transform: rotate(135deg); 
+        }
+        .gauge-half {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            clip: rect(0, 75px, 150px, 0);
+            border: 10px solid var(--color-primary-dark);
+            border-color: var(--color-primary-dark) var(--color-primary-dark) transparent transparent;
+            transform: rotate(-135deg); 
+            transition: transform 1s ease-in-out;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="container mx-auto p-4 md:p-8 max-w-7xl">
+        
+        <header class="text-center my-8 md:my-12">
+            <h1 class="text-4xl md:text-5xl font-extrabold mb-4" style="color: var(--color-primary-dark);">Re-engineering the Data Center</h1>
+            <p class="text-xl md:text-2xl text-gray-600">How Ancient Geometry Can Solve Modern Computing's Biggest Problem</p>
+        </header>
+
+        <main class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+            <section class="md:col-span-2 bg-white rounded-lg shadow-xl p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-center mb-6" style="color: var(--color-primary);">The Data Center Energy Crisis</h2>
+                <div class="flex flex-col md:flex-row items-center justify-around gap-8">
+                    <div class="text-center">
+                        <p class="text-7xl md:text-8xl font-extrabold" style="color: var(--color-primary-dark);">1-2%</p>
+                        <p class="text-2xl font-semibold text-gray-700 mt-2">of ALL Global Electricity</p>
+                        <p class="text-base text-gray-500 max-w-sm mt-4">This is the staggering amount of energy consumed by data centers, a figure that is rising 15-20% annually with the AI boom.</p>
+                    </div>
+                    <div class="w-full md:w-1/2">
+                        <p class="text-lg font-semibold text-center text-gray-700 mb-4">The Cooling Bottleneck</p>
+                        <div class="chart-container">
+                            <canvas id="coolingDonutChart"></canvas>
+                        </div>
+                        <p class="text-center text-gray-600 mt-4">A massive <span class="font-bold text-xl" style="color: var(--color-primary-light);">40%</span> of all data center energy is spent on one thing: cooling. This heat management is the primary bottleneck for computational scaling.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="md:col-span-2 bg-white rounded-lg shadow-xl p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-center mb-6" style="color: var(--color-primary);">The Hypothesis: Ancient Wisdom</h2>
+                <p id="originalHypothesis" class="text-center text-lg text-gray-600 max-w-3xl mx-auto mb-8">We propose that ancient geometric principles, encoded in structures like the Great Pyramid, are not symbolic. They are a framework for optimizing energy flow. We can apply this to modern computational infrastructure.</p>
+                <div class="flex flex-col md:flex-row justify-center gap-8">
+                    <div class="flex-1 bg-gray-50 rounded-lg p-6 border-l-4 border-accent">
+                        <h3 class="text-2xl font-bold mb-3" style="color: var(--color-primary-dark);">The &phi; (Phi) Ratio: 1.618</h3>
+                        <p class="text-base text-gray-700">Found throughout nature, the Golden Ratio (&phi;) and its corresponding Golden Angle (137.5&deg;) are optimal for packing and minimizing interference. We will use this to space servers, creating natural harmonic separation and reducing EM interference.</p>
+                    </div>
+                    <div class="flex-1 bg-gray-50 rounded-lg p-6 border-l-4 border-accent">
+                        <h3 class="text-2xl font-bold mb-3" style="color: var(--color-primary-dark);">The 26.5&deg; Angle</h3>
+                        <p class="text-base text-gray-700">The precise angle of the Great Pyramid's Grand Gallery is not accidental. This angle is ideal for promoting **laminar airflow**—a smooth, non-turbulent flow that is dramatically more efficient for heat transfer.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="rewrite-section" class="md:col-span-2 bg-gray-50 rounded-lg shadow-md p-6 md:p-8 border-t-4" style="border-color: var(--color-accent);">
+                <h2 class="text-3xl font-bold text-center mb-6" style="color: var(--color-primary-dark);">✨ Dynamic Pitch Rewriter</h2>
+                <p class="text-center text-gray-600 max-w-2xl mx-auto mb-6">Select an audience to instantly rewrite the "Hypothesis" section for maximum impact and relevance, focusing the core value proposition.</p>
+                
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6">
+                    <label for="audience-select" class="font-semibold">Target Audience:</label>
+                    <select id="audience-select" class="p-2 border border-gray-300 rounded-md focus:ring focus:ring-accent">
+                        <option value="Investor">Investor (Focus on ROI & Market)</option>
+                        <option value="Environmentalist">Environmentalist (Focus on Sustainability)</option>
+                        <option value="Architect">Architect (Focus on Design & Structure)</option>
+                    </select>
+                    <button id="rewrite-button" class="llm-button flex items-center justify-center" data-original-text="✨ Rewrite Hypothesis">
+                        <span id="rewrite-text">✨ Rewrite Hypothesis</span>
+                        <div id="rewrite-spinner" class="hidden w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin ml-2"></div>
+                    </button>
+                </div>
+
+                <div id="rewrite-result-container" class="mt-6 p-4 rounded-lg bg-white border border-gray-300 hidden">
+                    <h3 class="text-xl font-bold mb-2" style="color: var(--color-primary-dark);">Rewritten Pitch for <span id="rewritten-audience"></span></h3>
+                    <p id="rewritten-text" class="text-gray-700 italic"></p>
+                </div>
+            </section>
+            
+            <section id="ask-the-data-section" class="md:col-span-2 bg-white rounded-lg shadow-xl p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-center mb-6" style="color: var(--color-primary);">❓ Ask the Data</h2>
+                <p class="text-center text-gray-600 max-w-2xl mx-auto mb-6">Need a quick summary? Ask for clarification on the technical terms or project goals.</p>
+                
+                <div class="flex flex-col gap-4 max-w-3xl mx-auto">
+                    <div class="flex">
+                        <input type="text" id="ask-input" placeholder="e.g., What is laminar flow?" class="flex-grow p-3 border border-gray-300 rounded-l-lg focus:ring focus:ring-accent focus:outline-none" />
+                        <button id="ask-button" class="llm-button flex items-center justify-center rounded-l-none" data-original-text="Ask">
+                            <span id="ask-text">Ask</span>
+                            <div id="ask-spinner" class="hidden w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin ml-2"></div>
+                        </button>
+                    </div>
+                    <div id="ask-result-container" class="p-4 rounded-lg bg-gray-50 border border-gray-300 hidden">
+                        <p class="text-gray-700 italic" id="ask-result-text">Answer will appear here...</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="bg-white rounded-lg shadow-xl p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-center mb-6" style="color: var(--color-primary);">The Science of Flow</h2>
+                <p class="text-gray-600 text-center mb-4">By arranging servers at a 26.5&deg; angle, we encourage natural buoyancy and create a highly efficient laminar flow, which is ~40% more effective at transferring heat than standard turbulent flow.</p>
+                <div class="chart-container" style="max-height: 450px;">
+                    <canvas id="laminarFlowChart"></canvas>
+                </div>
+            </section>
+
+            <section class="bg-white rounded-lg shadow-xl p-6 md:p-8 flex flex-col justify-center">
+                <h2 class="text-3xl font-bold text-center mb-6" style="color: var(--color-primary);">Testable Predictions</h2>
+                <div class="text-center my-8">
+                    <p class="text-7xl md:text-8xl font-extrabold" style="color: var(--color-primary-dark);">30-50%</p>
+                    <p class="text-2xl font-semibold text-gray-700 mt-2">Projected Reduction</p>
+                    <p class="text-lg text-gray-600 mt-1">in Cooling Energy Consumption</p>
+                </div>
+
+                <div class="flex flex-col items-center justify-center my-6">
+                    <h3 class="text-xl font-bold mb-4" style="color: var(--color-primary-dark);">PUE Improvement Gauge</h3>
+                    <div class="relative flex items-center justify-center">
+                        <div class="gauge-ring relative">
+                            <div class="relative z-10 text-center">
+                                <span>30%</span>
+                                <p class="text-sm font-normal block mt-[-8px]">Goal</p>
+                            </div>
+                        </div>
+                        <div class="absolute inset-0">
+                             <div class="gauge-progress" style="transform: rotate(135deg);">
+                                <div class="gauge-half" style="transform: rotate(45deg);"></div> 
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-center text-sm text-gray-500 mt-2">Targeting 30% reduction from current PUE.</p>
+                </div>
+
+                <div class="text-center my-4">
+                    <p class="text-5xl font-bold" style="color: var(--color-primary);">Improved PUE</p>
+                    <p class="text-lg text-gray-600 mt-1">(Power Usage Effectiveness)</p>
+                </div>
+                <div class="text-center my-4">
+                    <p class="text-5xl font-bold" style="color: var(--color-primary);">Reduced EM Interference</p>
+                    <p class="text-lg text-gray-600 mt-1">from &phi;-ratio server spacing</p>
+                </div>
+            </section>
+            
+            <section class="md:col-span-2 bg-white rounded-lg shadow-xl p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-center mb-6" style="color: var(--color-primary);">The Prototype: A 4-Level Geometric Design</h2>
+                <p class="text-center text-lg text-gray-600 max-w-3xl mx-auto mb-8">We will build and test a 6ft x 6ft prototype. Its design follows the pyramid's structure, organizing components by function and thermal output, creating a natural vertical airflow from the cool base to the hot apex.</p>
+                <div class="flex flex-col items-center">
+                    <div class="flow-step">
+                        <span class="text-sm font-bold text-gray-500">LEVEL 4: APEX</span>
+                        <h3 class="text-xl font-bold" style="color: var(--color-primary-dark);">King's Chamber</h3>
+                        <p class="text-gray-700">GPU / High-Performance Compute (Max Heat)</p>
+                    </div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-step">
+                        <span class="text-sm font-bold text-gray-500">LEVEL 3: GALLERY</span>
+                        <h3 class="text-xl font-bold" style="color: var(--color-primary-dark);">Grand Gallery (26.5&deg;)</h3>
+                        <p class="text-gray-700">Main Computational Servers (High Heat)</p>
+                    </div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-step">
+                        <span class="text-sm font-bold text-gray-500">LEVEL 2: CHAMBER</span>
+                        <h3 class="text-xl font-bold" style="color: var(--color-primary-dark);">Queen's Chamber</h3>
+                        <p class="text-gray-700">Input/Output Servers (Low Heat)</p>
+                    </div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-step">
+                        <span class="text-sm font-bold text-gray-500">LEVEL 1: BASE</span>
+                        <h3 class="text-xl font-bold" style="color: var(--color-primary-dark);">Subterranean Intake</h3>
+                        <p class="text-gray-700">Cool Air Intake & Power Distribution</p>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="bg-white rounded-lg shadow-xl p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-center mb-6" style="color: var(--color-primary);">Phase 1 Budget: $15k - $25k</h2>
+                <p class="text-gray-600 text-center mb-4">A lean, high-impact budget for the 6-month proof-of-concept prototype.</p>
+                <div class="chart-container">
+                    <canvas id="budgetDonutChart"></canvas>
+                </div>
+            </section>
+
+            <section class="bg-white rounded-lg shadow-xl p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-center mb-6" style="color: var(--color-primary);">Interdisciplinary Team</h2>
+                <p class="text-gray-600 text-center mb-6">This research requires a fusion of expertise from four key domains.</p>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="team-card">Mechanical Engineering</div>
+                    <div class="team-card">Computer Science</div>
+                    <div class="team-card">Electrical Engineering</div>
+                    <div class="team-card">Physics</div>
+                </div>
+                <p class="text-gray-600 text-center mt-6">This cross-departmental collaboration provides unparalleled research and thesis opportunities for both undergraduate and graduate students.</p>
+            </section>
+            
+            <section class="md:col-span-2 bg-white rounded-lg shadow-xl p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-center mb-6" style="color: var(--color-primary);">Broader Impacts</h2>
+                <p class="text-center text-lg text-gray-600 max-w-3xl mx-auto mb-8">If successful, this project isn't just a new data center. It's a new paradigm.</p>
+                <ul class="space-y-4 max-w-2xl mx-auto">
+                    <li class="flex items-start text-lg">
+                        <span class="text-3xl mr-4">🌍</span>
+                        <div><strong class="text-xl" style="color: var(--color-primary-dark);">Sustainability:</strong> A direct, measurable reduction in the global carbon footprint of computing, aligning with net-zero goals.</div>
+                    </li>
+                    <li class="flex items-start text-lg">
+                        <span class="text-3xl mr-4">🏢</span>
+                        <div><strong class="text-xl" style="color: var(--color-primary-dark);">Architecture:</strong> A new geometric framework for HVAC and thermal management in office buildings, hospitals, and factories.</div>
+                    </li>
+                    <li class="flex items-start text-lg">
+                        <span class="text-3xl mr-4">🧠</span>
+                        <div><strong class="text-xl" style="color: var(--color-primary-dark);">Theoretical Physics:</strong> The first rigorous study to validate ancient geometric principles in a modern energy-information system.</div>
+                    </li>
+                </ul>
+            </section>
+
+        </main>
+        
+        <footer class="text-center mt-12 py-6 border-t border-gray-300">
+            <p class="text-gray-500">This infographic presents a research proposal for the Pyramid Data Center project.</p>
+            <p id="error-message" class="text-red-600 mt-4 font-semibold hidden">An error occurred. Please check the console for details.</p>
+        </footer>
+    </div>
+
+    <script>
+        const API_KEY = "";
+        const BASE_URL_TEXT = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${API_KEY}`;
+
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const cssVars = {
+                primaryDark: getComputedStyle(document.documentElement).getPropertyValue('--color-primary-dark').trim(),
+                primary: getComputedStyle(document.documentElement).getPropertyValue('--color-primary').trim(),
+                primaryLight: getComputedStyle(document.documentElement).getPropertyValue('--color-primary-light').trim(),
+                accent: getComputedStyle(document.documentElement).getPropertyValue('--color-accent').trim(),
+                accentLight: getComputedStyle(document.documentElement).getPropertyValue('--color-accent-light').trim(),
+                text: getComputedStyle(document.documentElement).getPropertyValue('--color-text').trim()
+            };
+
+            const fullInfographicContext = `
+                Title: Re-engineering the Data Center using Pyramid Geometry.
+                Problem: Data centers consume 1-2% of global electricity, with 40% of that used for cooling.
+                Hypothesis: Ancient geometric principles (Phi ratio 1.618 for server spacing and 26.5° angle for laminar airflow) can optimize energy flow and thermal efficiency.
+                Science: 26.5° angle encourages laminar flow, which is ~40% more efficient than standard turbulent flow for heat transfer.
+                Predictions: 30-50% reduction in cooling energy consumption; Improved PUE; Reduced EM Interference.
+                Prototype Design: 4-level structure (Base/Intake, Queen's/IO, Gallery/Compute at 26.5°, King's/GPU).
+                Phase 1 Budget ($15k total): Servers ($6k), Frame/Fabrication ($4k), Cooling System ($2.5k), Sensors/DAQ ($2.5k).
+                Team: Mechanical Engineering, Computer Science, Electrical Engineering, Physics.
+                Impacts: Sustainability (carbon reduction), Architecture (HVAC framework), Theoretical Physics (validating ancient geometry).
+            `;
+
+            const tooltipTitleCallback = (tooltipItems) => {
+                const item = tooltipItems[0];
+                let label = item.chart.data.labels[item.dataIndex];
+                if (Array.isArray(label)) {
+                    return label.join(' ');
+                }
+                return label;
+            };
+
+            function wrapLabel(label, maxWidth = 16) {
+                if (label.length <= maxWidth) {
+                    return label;
+                }
+                const words = label.split(' ');
+                const lines = [];
+                let currentLine = '';
+                for (const word of words) {
+                    if ((currentLine + ' ' + word).trim().length > maxWidth) {
+                        if (currentLine.length > 0) {
+                             lines.push(currentLine.trim());
+                        }
+                        currentLine = word;
+                    } else {
+                        currentLine = (currentLine + ' ' + word).trim();
+                    }
+                }
+                if (currentLine.length > 0) {
+                    lines.push(currentLine.trim());
+                }
+                return lines.filter(line => line.length > 0);
+            }
+
+            const baseChartOptions = (title, position = 'bottom') => ({
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: position,
+                        labels: {
+                            color: cssVars.text,
+                            font: { size: 12 },
+                            boxWidth: 20
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            title: tooltipTitleCallback
+                        },
+                        backgroundColor: '#ffffff',
+                        titleColor: cssVars.primaryDark,
+                        bodyColor: cssVars.text,
+                        borderColor: cssVars.accentLight,
+                        borderWidth: 1
+                    },
+                    title: {
+                        display: title ? true : false,
+                        text: title || '',
+                        color: cssVars.text,
+                        font: { size: 16, weight: '600' },
+                        padding: { bottom: 20 }
+                    }
+                }
+            });
+
+            createCoolingChart();
+            createFlowChart();
+            createBudgetChart();
+            setupGeminiFeatures();
+
+            function createCoolingChart() {
+                const ctx = document.getElementById('coolingDonutChart')?.getContext('2d');
+                if (!ctx) return;
+
+                new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Cooling Energy', 'All Other Energy'],
+                        datasets: [{
+                            label: 'Energy Consumption',
+                            data: [40, 60],
+                            backgroundColor: [cssVars.primaryLight, cssVars.accentLight],
+                            borderColor: [cssVars.primaryLight, cssVars.accentLight],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        ...baseChartOptions(),
+                        cutout: '70%',
+                    }
+                });
+            }
+
+            function createFlowChart() {
+                const ctx = document.getElementById('laminarFlowChart')?.getContext('2d');
+                if (!ctx) return;
+
+                const labels = ['Standard Turbulent Flow', '26.5° Laminar Flow'].map(l => wrapLabel(l, 16));
+
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Relative Thermal Efficiency',
+                            data: [100, 140],
+                            backgroundColor: [cssVars.accent, cssVars.primaryLight],
+                            borderRadius: 4
+                        }]
+                    },
+                    options: {
+                        ...baseChartOptions('Thermal Efficiency (Relative)'),
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: {
+                                    color: '#e5e7eb'
+                                },
+                                ticks: {
+                                    color: cssVars.text
+                                }
+                            },
+                            x: {
+                                grid: {
+                                    display: false
+                                },
+                                ticks: {
+                                    color: cssVars.text,
+                                    font: {
+                                        size: 14
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+            
+            function createBudgetChart() {
+                const ctx = document.getElementById('budgetDonutChart')?.getContext('2d');
+                if (!ctx) return;
+
+                const labels = [
+                    'Servers ($6,000)', 
+                    'Frame / Fabrication ($4,000)', 
+                    'Cooling System ($2,500)', 
+                    'Sensors / DAQ ($2,500)'
+                ].map(l => wrapLabel(l, 20));
+
+                new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Cost',
+                            data: [6000, 4000, 2500, 2500],
+                            backgroundColor: [
+                                cssVars.primaryDark, 
+                                cssVars.primaryLight, 
+                                cssVars.accent, 
+                                cssVars.accentLight
+                            ],
+                            borderColor: [
+                                cssVars.primaryDark, 
+                                cssVars.primaryLight, 
+                                cssVars.accent, 
+                                cssVars.accentLight
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        ...baseChartOptions(null, 'top'), 
+                        cutout: '70%',
+                    }
+                });
+            }
+
+            async function exponentialBackoffFetch(url, options, maxRetries = 5) {
+                for (let i = 0; i < maxRetries; i++) {
+                    try {
+                        const response = await fetch(url, options);
+                        if (response.ok) {
+                            return response;
+                        }
+                        if (response.status === 429 && i < maxRetries - 1) {
+                            const delay = Math.pow(2, i) * 1000 + Math.random() * 1000;
+                            await new Promise(resolve => setTimeout(resolve, delay));
+                            continue;
+                        }
+                        throw new Error(`API error: ${response.status} ${response.statusText}`);
+                    } catch (error) {
+                        if (i === maxRetries - 1) {
+                            throw error;
+                        }
+                        const delay = Math.pow(2, i) * 1000 + Math.random() * 1000;
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                    }
+                }
+                throw new Error('Exceeded maximum fetch retries.');
+            }
+
+            async function callTextGemini(userQuery, systemPrompt) {
+                const payload = {
+                    contents: [{ parts: [{ text: userQuery }] }],
+                    systemInstruction: { parts: [{ text: systemPrompt }] },
+                };
+
+                const response = await exponentialBackoffFetch(BASE_URL_TEXT, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+                const text = result.candidates?.[0]?.content?.parts?.[0]?.text || 'Error: Could not generate content. The model might be unavailable or the API key may be missing.';
+                return text;
+            }
+            
+            function showLoading(buttonId, textId, spinnerId, isLoading) {
+                const button = document.getElementById(buttonId);
+                const text = document.getElementById(textId);
+                const spinner = document.getElementById(spinnerId);
+
+                button.disabled = isLoading;
+                text.textContent = isLoading ? 'Processing...' : button.getAttribute('data-original-text');
+                if (isLoading) {
+                    spinner.classList.remove('hidden');
+                } else {
+                    spinner.classList.add('hidden');
+                }
+            }
+
+            function setupGeminiFeatures() {
+                const rewriteButton = document.getElementById('rewrite-button');
+                const audienceSelect = document.getElementById('audience-select');
+                const rewrittenTextElement = document.getElementById('rewritten-text');
+                const rewrittenAudienceElement = document.getElementById('rewritten-audience');
+                const rewriteResultContainer = document.getElementById('rewrite-result-container');
+                const originalHypothesis = document.getElementById('originalHypothesis').textContent.trim();
+                
+                const askButton = document.getElementById('ask-button');
+                const askInput = document.getElementById('ask-input');
+                const askResultContainer = document.getElementById('ask-result-container');
+                const askResultText = document.getElementById('ask-result-text');
+
+                rewriteButton.addEventListener('click', async () => {
+                    const audienceSelectText = audienceSelect.options[audienceSelect.selectedIndex].text.split('(')[0].trim();
+
+                    const systemPrompt = "You are an expert pitch writer. Your goal is to rewrite the provided research hypothesis to maximize its appeal to the specified target audience. The rewritten text must be a single, concise paragraph of a maximum of three sentences. Do not use markdown formatting.";
+                    const userQuery = `Target Audience: ${audienceSelectText}\n\nOriginal Hypothesis:\n"${originalHypothesis}"`;
+
+                    showLoading('rewrite-button', 'rewrite-text', 'rewrite-spinner', true);
+                    rewriteResultContainer.classList.add('hidden');
+                    
+                    try {
+                        const rewrittenText = await callTextGemini(userQuery, systemPrompt);
+                        
+                        rewrittenAudienceElement.textContent = audienceSelectText;
+                        rewrittenTextElement.textContent = rewrittenText.trim();
+                        rewriteResultContainer.classList.remove('hidden');
+
+                    } catch (error) {
+                        document.getElementById('error-message').classList.remove('hidden');
+                        console.error('Gemini Rewrite Error:', error);
+                        rewrittenTextElement.textContent = `Error: Failed to generate pitch for ${audienceSelectText}. Please check console.`;
+                        rewriteResultContainer.classList.remove('hidden');
+                    } finally {
+                        showLoading('rewrite-button', 'rewrite-text', 'rewrite-spinner', false);
+                    }
+                });
+
+                askButton.addEventListener('click', async () => {
+                    const query = askInput.value.trim();
+                    if (!query) {
+                        askResultText.textContent = "Please enter a question about the project or the data.";
+                        askResultContainer.classList.remove('hidden');
+                        return;
+                    }
+                    
+                    const systemPrompt = `You are a helpful project assistant specializing in data center technology and sacred geometry. Use the provided context to answer the user's question clearly and concisely. Do not add any new information. If the information is not in the context, state that you cannot answer based on the provided data. Context: ${fullInfographicContext}`;
+                    
+                    showLoading('ask-button', 'ask-text', 'ask-spinner', true);
+                    askResultContainer.classList.add('hidden');
+                    askResultText.textContent = "";
+
+                    try {
+                        const answer = await callTextGemini(query, systemPrompt);
+                        
+                        askResultText.textContent = answer.trim();
+                        askResultContainer.classList.remove('hidden');
+
+                    } catch (error) {
+                        document.getElementById('error-message').classList.remove('hidden');
+                        console.error('Gemini Ask Error:', error);
+                        askResultText.textContent = `Error: Failed to get an answer. Please check the console for API issues.`;
+                        askResultContainer.classList.remove('hidden');
+                    } finally {
+                        showLoading('ask-button', 'ask-text', 'ask-spinner', false);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
